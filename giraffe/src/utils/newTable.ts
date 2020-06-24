@@ -5,13 +5,7 @@ import {fromFlux} from './fromFlux'
 class SimpleTable implements Table {
   public readonly length: number = 0
 
-  private columns: {
-    [colKey: string]: {
-      name: string
-      type: ColumnType
-      data: ColumnData
-    }
-  } = {}
+  public columns = {}
 
   constructor(length: number) {
     this.length = length
@@ -73,7 +67,8 @@ class SimpleTable implements Table {
     columnKey: string,
     type: ColumnType,
     data: ColumnData,
-    name?: string
+    name?: string,
+    group?: string
   ): Table {
     if (this.columns[columnKey]) {
       throw new Error('column already exists')
@@ -93,6 +88,7 @@ class SimpleTable implements Table {
         name: name || columnKey,
         type,
         data,
+        group: group || 'false',
       },
     }
 
