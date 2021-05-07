@@ -68,7 +68,15 @@ const Geo: FunctionComponent<Props> = props => {
   if (width === 0 || height === 0) {
     return null
   }
-  const {lat, lon, zoom, mapStyle, stylingConfig, allowPanAndZoom} = props
+  const {
+    lat,
+    lon,
+    zoom,
+    mapStyle,
+    stylingConfig,
+    allowPanAndZoom,
+    centerMethod,
+  } = props
   const {layers, tileServerConfiguration} = props
   const {tileServerUrl, bingKey} = tileServerConfiguration
   const mapRef = React.createRef()
@@ -100,10 +108,43 @@ const Geo: FunctionComponent<Props> = props => {
     }
   }
 
-  const latLon = preprocessedTable.getLatLon(0)
-  const mapCenter = {
-    lat: latLon ? latLon.lat : lat,
-    lon: latLon ? latLon.lon : lon,
+  const cMeth = centerMethod ? centerMethod : 'fixed'
+  let mapCenter = {lat: lat, lon: lon}
+
+  if (preprocessedTable.getRowCount() > 0) {
+    let latLon
+    switch (cMeth) {
+      case 'first':
+        latLon = preprocessedTable.getLatLon(0)
+        mapCenter = {lat: latLon.lat, lon: latLon.lon}
+        break
+      case 'last':
+        latLon = preprocessedTable.getLatLon(
+          preprocessedTable.getRowCount() - 1
+        )
+        mapCenter = {lat: latLon.lat, lon: latLon.lon}
+        break
+      case 'fixed':
+        break
+      case 'center':
+        latLon = preprocessedTable.getCenterPoint()
+        mapCenter = {lat: latLon.lat, lon: latLon.lon}
+        break
+      default:
+        if (typeof cMeth === 'number') {
+          const index =
+            cMeth > 0 && cMeth < preprocessedTable.getRowCount() - 2
+              ? cMeth - 1
+              : 0
+          const latLon = preprocessedTable.getLatLon(index)
+          mapCenter = {lat: latLon.lat, lon: latLon.lon}
+        } else {
+          console.warn(
+            `unhandled centerMethod ${cMeth} using default fixed coordinates ${lat},${lon}`
+          )
+        }
+        break
+    }
   }
 
   return (

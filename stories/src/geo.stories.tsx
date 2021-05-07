@@ -29,14 +29,17 @@ const bingTileServerConfiguration = {
 
 const geo = storiesOf('Geo', module).addDecorator(withKnobs)
 
+const latDefault = 40
+const lonDefault = -76
+
 const genericKnobs = () => {
-  const latitude = number('Latitude', 40, {
+  const latitude = number('Latitude', latDefault, {
     range: true,
     min: -90,
     max: 90,
     step: 1,
   })
-  const longitude = number('Longitude', -76, {
+  const longitude = number('Longitude', lonDefault, {
     range: true,
     min: -180,
     max: 180,
@@ -49,7 +52,21 @@ const genericKnobs = () => {
     step: 1,
   })
   const allowPanAndZoom = boolean('Allow pan and zoom', true)
+
   return {allowPanAndZoom, latitude, longitude, zoom}
+}
+
+const specialKnobs = () => {
+  const centerMethod = select('Center Method', {
+    first: 'first',
+    fixed: 'fixed',
+    center: 'center',
+    last: 'last',
+    '1': 1,
+    '2': 2,
+    '3': 3,
+  })
+  return {centerMethod}
 }
 
 const buildCircleMapStory = tileServerConfiguration => () => {
@@ -146,6 +163,7 @@ geo.add('Map Markers Custom CSV', () => {
   let table = fromFlux(csv).table
 
   const {allowPanAndZoom, latitude, longitude, zoom} = genericKnobs()
+  const {centerMethod} = specialKnobs()
   const config: Config = {
     table: table,
     showAxes: false,
@@ -157,6 +175,7 @@ geo.add('Map Markers Custom CSV', () => {
         zoom,
         allowPanAndZoom,
         detectCoordinateFields: false,
+        centerMethod,
         layers: [
           {
             type: 'pointMap',
@@ -340,6 +359,7 @@ geo.add('Tracks', () => {
     step: 1,
   })
   const {allowPanAndZoom, latitude, longitude, zoom} = genericKnobs()
+  const {centerMethod} = specialKnobs()
   const {
     speed,
     trackWidth,
@@ -359,6 +379,7 @@ geo.add('Tracks', () => {
         lon: longitude,
         zoom,
         allowPanAndZoom,
+        centerMethod,
         detectCoordinateFields: false,
         layers: [
           {
