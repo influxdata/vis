@@ -1,9 +1,9 @@
 // Libraries
 import React, {FC, useContext} from 'react'
-import {PaginationContext} from './SimpleTableUtils/pagination'
+import {PaginationContext} from './pagination'
 
 // Components
-import {PaginationNav} from '@influxdata/clockface'
+import {PaginationNav} from './PaginationNav'
 
 const PageControl: FC = () => {
   const {offset, size, total, setPage} = useContext(PaginationContext)

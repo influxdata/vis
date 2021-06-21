@@ -7,11 +7,11 @@ import React, {
   useState,
 } from 'react'
 // import {DapperScrollbars} from '@influxdata/clockface'
-import {DapperScrollbars} from './DapperScrollbars'
-import {FluxDataType} from '../index'
-import {SubsetTable, SimpleTableViewProperties} from './SimpleTableGraph'
-import {FluxResult, Column} from './SimpleTableUtils/flows'
-import {PaginationContext} from './SimpleTableUtils/pagination'
+import {DapperScrollbars} from '../DapperScrollbars'
+import {FluxDataType} from '../../index'
+import {SubsetTable, SimpleTableViewProperties} from '../SimpleTableGraph'
+import {FluxResult, Column} from './flows'
+import {PaginationContext} from './pagination'
 import InnerTable from './InnerTable'
 
 interface ExtendedColumn {

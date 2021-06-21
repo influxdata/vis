@@ -3,18 +3,18 @@ import React, {FC} from 'react'
 import {FluxDataType} from '../index'
 
 // Other pieces of the SimpleTable
-import PageControl from './PageControl'
-import PagedTable from './PagedTable'
+import PageControl from './SimpleTable/PageControl'
+import PagedTable from './SimpleTable/PagedTable'
 
 // Other things (make sure to fix file paths)
-import {FluxResult} from './SimpleTableUtils/flows'
+import {FluxResult} from './SimpleTable/flows'
 
 // Cut and just copied the specific item being imported over
 // import {VisualizationProps} from 'src/visualization'
-import {PaginationProvider} from './SimpleTableUtils/pagination'
+import {PaginationProvider} from './SimpleTable/pagination'
 
 // SCSS also uses clockface stuff
-import './SimpleTableGraph.scss'
+import './SimpleTable/SimpleTableGraph.scss'
 
 // Vizualization props copied over from
 // ui/src/visualization/index.ts

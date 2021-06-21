@@ -1,6 +1,13 @@
 import React, {FC} from 'react'
-import {Table, ComponentSize} from '@influxdata/clockface'
-import {SubsetTable} from './SimpleTableGraph'
+import {Table} from './Table'
+import {SubsetTable} from '../SimpleTableGraph'
+
+enum ComponentSize {
+  ExtraSmall = 'xs',
+  Small = 'sm',
+  Medium = 'md',
+  Large = 'lg',
+}
 
 interface InnerProps {
   table: SubsetTable
